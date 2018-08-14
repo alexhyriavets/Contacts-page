@@ -52,6 +52,7 @@
   font-family: $primary-font;
   background-color: $white;
   color: $primary-grey;
+  padding-bottom: 94px;
 
   &__content {
     display: flex;
