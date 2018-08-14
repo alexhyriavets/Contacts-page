@@ -6,7 +6,9 @@
           <h2 class="offices__title section-title">Our Offices</h2>
           <OfficesTabs :offices-data="Offices" />
         </div>
-        <div class="offices__right"></div>
+        <div class="offices__right">
+          <Map />
+        </div>
       </div>
     </div>
   </section>
@@ -14,12 +16,14 @@
 
 <script>
 import OfficesTabs from './OfficesTabs'
+import Map from './Map'
 import Offices from './../../../static/offices.json'
 
 export default {
   name: 'OurOffices',
   components: {
-    OfficesTabs
+    OfficesTabs,
+    Map
   },
   data () {
     return {

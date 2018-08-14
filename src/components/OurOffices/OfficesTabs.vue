@@ -3,15 +3,15 @@
     <ul class="tabs__nav">
       <li
         v-for="(tab, index) in shownTabs"
-        :key="`tab-${tab}-${index}`"
+        :key="`tab-${tab.id}-${index}`"
         class="tabs__nav-item"
       >
         <button
           class="tabs__nav-link"
-          :class="{ 'active' : tab === currentTab }"
-          @click="changeCurrentTabHandler(tab)"
+          :class="{ 'active' : tab.id === currentTabId }"
+          @click="changeCurrentTabHandler(tab.id)"
         >
-          {{ tab }}
+          {{ tab.city }}
         </button>
       </li>
     </ul>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { map, prop, head, compose, find, propEq } from 'ramda'
+import { map, prop, head, compose, find, propEq, pick } from 'ramda'
 
 export default {
   name: 'OfficesTabs',
@@ -42,21 +42,21 @@ export default {
   },
   data () {
     return {
-      currentTab: compose(head, map(prop('city')))(this.officesData)
+      currentTabId: compose(head, map(prop('id')))(this.officesData)
     }
   },
   computed: {
     shownTabs () {
-      return map(prop('city'), this.officesData)
+      return map(pick(['id', 'city']), this.officesData)
     },
     shownOffice () {
-      const isCurrentOffice = propEq('city', this.currentTab)
+      const isCurrentOffice = propEq('id', this.currentTabId)
       return find(isCurrentOffice, this.officesData) || {}
     }
   },
   methods: {
-    changeCurrentTabHandler (newTab) {
-      this.currentTab = newTab
+    changeCurrentTabHandler (newTabId) {
+      this.currentTabId = newTabId
     }
   }
 }
