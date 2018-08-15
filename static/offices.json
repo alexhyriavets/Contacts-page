@@ -3,32 +3,48 @@
     "id": 1,
     "city": "Kyiv",
     "name": "Global Message Services Ukraine LLC",
-    "location": "Kyiv, Stepan Bandera, 33",
+    "address": "Kyiv, Stepan Bandera, 33",
     "index": "02066",
-    "country": "Ukraine"
+    "country": "Ukraine",
+    "location": {
+      "lat": 50.452660,
+      "lng": 30.508334
+    }
   },
   {
     "id": 2,
     "city": "New York",
     "name": "Global Message Services USA LLC",
-    "location": "New York, 10 Avenu",
+    "address": "New York, 10 Avenu",
     "index": "231421",
-    "country": "USA"
+    "country": "USA",
+    "location": {
+      "lat": 40.725671,
+      "lng": -73.995154
+    }
   },
   {
     "id": 3,
     "city": "Guangzhou",
     "name": "Global Message Services Chine LLC",
-    "location": "Guangzhou, Ni hou, 12/23a",
+    "address": "Guangzhou, Ni hou, 12/23a",
     "index": "421552",
-    "country": "China"
+    "country": "China",
+    "location": {
+      "lat": 23.339874,
+      "lng": 113.360923
+    }
   },
   {
     "id": 4,
     "city": "Barcelona",
     "name": "Global Message Services Spain LLC",
-    "location": "Barcelona, Rela pushas, 3a",
+    "address": "Barcelona, Rela pushas, 3a",
     "index": "420932",
-    "country": "Spain"
+    "country": "Spain",
+    "location": {
+      "lat": 41.394845,
+      "lng": 2.175480
+    }
   }
 ]

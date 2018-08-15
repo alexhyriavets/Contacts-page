@@ -19,7 +19,7 @@
       <div :key="shownOffice.name">
         <h3 class="tabs__title">{{ shownOffice.name }}</h3>
         <p class="tabs__address">
-          {{ shownOffice.location }} <br>
+          {{ shownOffice.address }} <br>
           {{ shownOffice.index }} <br>
           {{ shownOffice.country }}
         </p>
@@ -57,6 +57,7 @@ export default {
   methods: {
     changeCurrentTabHandler (newTabId) {
       this.currentTabId = newTabId
+      this.$emit('tab-change', newTabId)
     }
   }
 }

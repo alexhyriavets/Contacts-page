@@ -6,7 +6,7 @@ import './assets/scss/main.scss'
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBY687_aL3sXHyuEpBInt8okyAbgy0i6YU',
+    key: 'AIzaSyB-C6hWh4esJM5e3VtIXqHwYGxD2qRwuoQ',
     libraries: 'places'
   }
 })
