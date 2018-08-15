@@ -3,7 +3,9 @@ import App from './App.vue'
 import store from './store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import './assets/scss/main.scss'
+import Vuelidate from 'vuelidate'
 
+Vue.use(Vuelidate)
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyB-C6hWh4esJM5e3VtIXqHwYGxD2qRwuoQ',

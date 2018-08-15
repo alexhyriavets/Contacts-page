@@ -23,7 +23,7 @@
 import OfficesTabs from './OfficesTabs'
 import Map from './Map'
 import Offices from './../../../static/offices.json'
-import { find, pathOr, propEq } from 'ramda'
+import { find, pathOr, propEq, compose, map, prop, head } from 'ramda'
 
 export default {
   name: 'OurOffices',
@@ -34,7 +34,7 @@ export default {
   data () {
     return {
       offices: Offices,
-      currentPosition: { lat: 50.452660, lng: 30.508334 }
+      currentPosition: compose(head, map(prop('location')))(Offices)
     }
   },
   methods: {
