@@ -8,7 +8,7 @@ import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyB-C6hWh4esJM5e3VtIXqHwYGxD2qRwuoQ',
+    key: 'AIzaSyCLbie2F2ZYl7Bn-qV9lnuaWA5f7cbhvdI',
     libraries: 'places'
   }
 })

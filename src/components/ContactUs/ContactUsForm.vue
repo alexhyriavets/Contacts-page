@@ -3,51 +3,53 @@
     <AInput
       v-model="name"
       label="Name"
-      :is-invalid="$v.name.$error"
       class="csform__input"
+      :error-messages="fieldErrors('name')"
     />
     <AInput
       v-model="phone"
       label="Phone"
-      :is-invalid="$v.phone.$error"
       class="csform__input"
+      :error-messages="fieldErrors('phone')"
     />
     <AInput
       v-model="email"
       label="Email"
-      :is-invalid="$v.email.$error"
       class="csform__input"
+      :error-messages="fieldErrors('email')"
     />
-    <div class="csform__checkbox-wrapper">
-      <input
-        v-model="isAgreed"
-        type="checkbox"
-        id="acheckbox"
-        class="csform__checkbox"
-      >
-      <label for="acheckbox" class="csform__checkbox-label">I agree the processing of personal data</label>
-    </div>
-    <p v-if="showAlert" class="csform__alert">You did not agree processing of personal data</p>
+    <ACheckbox
+      v-model="isAgreed"
+      label="I agree the processing of personal data"
+      :error-messages="didNotAgreedError"
+    />
     <button class="csform__button" type="submit">get in touch</button>
   </form>
 </template>
 
 <script>
-import AInput from './../shared/AInput'
+import AInput from '@/components/shared/AInput'
+import ACheckbox from '@/components/shared/ACheckbox'
+import { mapActions } from 'vuex'
 import { required, email, numeric } from 'vuelidate/lib/validators'
+import { fieldErrorsMixin } from '@/mixins'
+import ErrorsList from '@/components/shared/ErrorsList'
 
 export default {
   name: 'ContactUsForm',
   components: {
-    AInput
+    AInput,
+    ErrorsList,
+    ACheckbox
   },
+  mixins: [fieldErrorsMixin],
   data () {
     return {
       name: '',
       phone: '',
       email: '',
       isAgreed: false,
-      showAlert: false
+      didNotAgreedError: []
     }
   },
   validations: {
@@ -61,23 +63,40 @@ export default {
     phone: {
       required,
       numeric
-    },
-    isAgreed: {
-      required
     }
   },
+  validationMessages: {
+    name: { required: 'Name is required' },
+    email: { required: 'Email is required', email: 'Please, enter valid email' },
+    phone: { required: 'Phone is required', numeric: 'Phone number should contains only numeric values' }
+  },
   methods: {
-    submitFormHandler () {
+    ...mapActions({
+      sendContactUsForm: 'sendContactUsForm'
+    }),
+    async submitFormHandler () {
       this.$v.$touch()
 
-      if (!this.isAgreed) {
-        this.showAlert = true
+      if (this.isAgreed) {
+        this.didNotAgreedError = []
+      } else {
+        this.didNotAgreedError = ['You did not agree processing of personal data']
         return
       }
 
       if (this.$v.$invalid) return
 
-      // asda
+      const payload = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone
+      }
+
+      try {
+        await this.sendContactUsForm(payload)
+      } catch (error) {
+        console.error(error)
+      }
 
       this.clearForm()
     },
@@ -86,7 +105,10 @@ export default {
       this.email = ''
       this.phone = ''
       this.isAgreed = false
-      this.showAlert = false
+
+      this.didNotAgreedError = []
+
+      this.$v.$reset()
     }
   }
 }
@@ -101,19 +123,6 @@ export default {
 
     &:last-child {
       margin-bottom: 0;
-    }
-  }
-
-  &__checkbox {
-    &-wrapper {
-      display: flex;
-      align-items: center;
-      color: $white;
-      font-size: 1.125rem;
-    }
-
-    &-label {
-      margin-left: 8px;
     }
   }
 
@@ -141,7 +150,7 @@ export default {
     bottom: 90px;
     left: 0;
     font-size: 1.125rem;
-    color:$error;
+    color: $error;
   }
 }
 </style>

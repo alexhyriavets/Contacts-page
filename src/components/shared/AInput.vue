@@ -1,7 +1,7 @@
 <template>
   <div
     class="input"
-    :class="{ 'error' : isInvalid }"
+    :class="{ 'error' : hasError }"
   >
     <input
       :value="value"
@@ -15,12 +15,22 @@
       <label :for="`a${label}`" class="input__label">{{ label }}</label>
       <div class="input__line"></div>
     </div>
+    <ErrorsList
+      v-if="true"
+      class="input__errors-list"
+      :error-messages="errorMessages"
+    />
   </div>
 </template>
 
 <script>
+import ErrorsList from '@/components/shared/ErrorsList'
+
 export default {
   name: 'AInput',
+  components: {
+    ErrorsList
+  },
   props: {
     value: {
       type: [String, Number]
@@ -29,9 +39,14 @@ export default {
       type: String,
       default: ''
     },
-    isInvalid: {
-      type: Boolean,
-      default: false
+    errorMessages: {
+      type: Array,
+      default: () => []
+    }
+  },
+  computed: {
+    hasError () {
+      return Boolean(this.errorMessages.length)
     }
   },
   methods: {
@@ -89,11 +104,13 @@ export default {
       }
     }
   }
+
+  &__errors-list {
+    transform: translateY(-14px);
+  }
 }
 
 .error {
-  color: $error;
-
   .input__line {
     background-color: $error;
   }
